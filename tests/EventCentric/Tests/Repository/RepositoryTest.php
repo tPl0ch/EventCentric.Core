@@ -35,7 +35,7 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         /** @var $retrievedOrder Order */
         $retrievedOrder->pay(50);
         $retrievedOrder->pay(50);
-        $changes = $retrievedOrder->getChanges();
+        $changes = $retrievedOrder->getChanges()->toArray();
 
         $this->assertCount(3, $changes);
         $this->assertInstanceOf(PaymentWasMade::class, $changes[0]);

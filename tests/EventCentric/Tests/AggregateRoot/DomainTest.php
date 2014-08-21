@@ -21,7 +21,7 @@ final class DomainTest extends PHPUnit_Framework_TestCase
         $order = Order::orderProduct($orderId, ProductId::generate(), 100);
         $order->pay(50);
         $order->pay(50);
-        $changes = $order->getChanges();
+        $changes = $order->getChanges()->toArray();
 
         $this->assertCount(4, $changes);
         $this->assertInstanceOf(ProductWasOrdered::class, $changes[0]);
@@ -30,4 +30,3 @@ final class DomainTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[3]);
     }
 }
- 

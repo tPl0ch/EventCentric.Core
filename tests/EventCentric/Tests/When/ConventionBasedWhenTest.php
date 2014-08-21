@@ -3,7 +3,7 @@
 namespace EventCentric\Tests\When;
 
 use EventCentric\DomainEvents\DomainEvent;
-use EventCentric\DomainEvents\DomainEventsArray;
+use EventCentric\DomainEvents\DomainEventsIterator;
 use EventCentric\When\ConventionalWhen;
 
 final class MyReactor
@@ -19,7 +19,8 @@ final class MyReactor
 
     public function test()
     {
-        $domainEvents = new DomainEventsArray([new SomethingHasHappened()]);
+        $domainEvents = new DomainEventsIterator([new SomethingHasHappened()]);
+
         $this->whenAll($domainEvents);
         if(!$this->reacted) {
             throw new \Exception("The method 'whenSomethingHasHappened' was not called");

@@ -57,7 +57,7 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
 
         $retrievedOrder = $repository->get($this->orderId);
         $retrievedOrder->pay(50);
-        $changes = $retrievedOrder->getChanges();
+        $changes = $retrievedOrder->getChanges()->toArray();
         $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[1]);
     }
 
@@ -124,4 +124,3 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
     }
 
 }
- 

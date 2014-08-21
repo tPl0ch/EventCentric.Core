@@ -2,7 +2,7 @@
 
 namespace EventCentric\Tests\AggregateRoot;
 
-use EventCentric\DomainEvents\DomainEventsArray;
+use EventCentric\DomainEvents\DomainEventsIterator;
 use EventCentric\Tests\Fixtures\Order;
 use EventCentric\Tests\Fixtures\OrderId;
 use EventCentric\Tests\Fixtures\OrderWasPaidInFull;
@@ -19,13 +19,13 @@ final class ReconstitutionTest extends PHPUnit_Framework_TestCase
     public function it_should_behave_the_same_after_reconstitution()
     {
         $orderId = OrderId::generate();
-        $history = new DomainEventsArray([
+        $history = new DomainEventsIterator([
             new ProductWasOrdered($orderId, ProductId::generate(), 100),
             new PaymentWasMade($orderId, 50)
         ]);
         $order = Order::reconstituteFrom($history);
         $order->pay(50);
-        $changes = $order->getChanges();
+        $changes = $order->getChanges()->toArray();
 
         $this->assertCount(2, $changes);
         $this->assertInstanceOf(PaymentWasMade::class, $changes[0]);
@@ -33,4 +33,3 @@ final class ReconstitutionTest extends PHPUnit_Framework_TestCase
     }
 
 }
- 
