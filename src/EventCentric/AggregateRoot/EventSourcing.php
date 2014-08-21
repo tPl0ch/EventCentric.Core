@@ -4,7 +4,7 @@ namespace EventCentric\AggregateRoot;
 
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\DomainEvents\DomainEvents;
-use EventCentric\DomainEvents\DomainEventsArray;
+use EventCentric\DomainEvents\DomainEventsIterator;
 
 /**
  * Implements TracksChanges
@@ -31,7 +31,7 @@ trait EventSourcing
      */
     public function getChanges()
     {
-        return new DomainEventsArray($this->recordedEvents);
+        return new DomainEventsIterator($this->recordedEvents);
     }
 
     /**
