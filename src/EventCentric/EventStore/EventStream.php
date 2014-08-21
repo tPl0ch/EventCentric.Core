@@ -3,10 +3,10 @@
 namespace EventCentric\EventStore;
 
 use EventCentric\Contracts\Contract;
-use EventCentric\EventStore\CommitId;
-use EventCentric\EventStore\EventEnvelope;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\Persistence;
+
+use iter as _;
 
 /**
  * A logical, cohesive sequence of DomainEvents, ordered chronologically by their
@@ -82,14 +82,17 @@ final class EventStream
     }
 
     /**
-     * @param EventEnvelope[] $envelopes
+     * @param \Iterator|EventEnvelope[] $envelopes
      * @return void
      */
-    public function appendAll(array $envelopes)
+    public function appendAll(\Iterator $envelopes)
     {
-        foreach($envelopes as $envelope) {
-            $this->append($envelope);
-        }
+        _\apply(
+            function (EventEnvelope $envelope) {
+                $this->append($envelope);
+            },
+            $envelopes
+        );
     }
 
     /**
