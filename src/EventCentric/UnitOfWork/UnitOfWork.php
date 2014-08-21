@@ -4,10 +4,10 @@ namespace EventCentric\UnitOfWork;
 
 use EventCentric\AggregateRoot\ReconstitutesFromHistory;
 use EventCentric\AggregateRoot\TracksChanges;
+use EventCentric\DomainEvents\DomainEventsIterator;
 use EventCentric\EventStore\CommitId;
 use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
-use EventCentric\DomainEvents\DomainEventsArray;
 use EventCentric\EventStore\EventEnvelope;
 use EventCentric\EventStore\EventId;
 use EventCentric\EventStore\EventStore;
@@ -175,7 +175,7 @@ final class UnitOfWork
             return $domainEvent;
         };
 
-        $domainEvents = new DomainEventsArray(
+        $domainEvents = new DomainEventsIterator(
             array_map($unwrapFromEnvelope, $eventEnvelopes)
         );
 
