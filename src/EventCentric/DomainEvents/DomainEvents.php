@@ -2,21 +2,27 @@
 
 namespace EventCentric\DomainEvents;
 
-use ArrayAccess;
 use Countable;
 use Iterator;
 
-interface DomainEvents extends Countable, Iterator, ArrayAccess
+interface DomainEvents extends Countable, Iterator
 {
     /**
      * @param callable $callback
-     * @return array
+     *
+     * @return \Iterator
      */
     public function map(callable $callback);
 
     /**
      * @param DomainEvents $other
+     *
      * @return DomainEvents
      */
     public function append(DomainEvents $other);
+
+    /**
+     * @return array
+     */
+    public function toArray();
 }
